@@ -1,0 +1,7 @@
+moc_*
+*.o
+*.pro.user
+Makefile
+cmc-gl
+*.blend
+*.swp
