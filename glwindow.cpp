@@ -88,7 +88,7 @@ void GLWindow::accumRotation(GLfloat &rot, GLfloat& vel)
     float sign = copysignf(1.0, vel);
 
     rot += vel;
-    vel = copysign(max(fabsf(vel) - 0.5f, 0.0f), sign);
+    vel = copysignf(max(fabsf(vel) - 0.5f, 0.0f), sign);
 }
 
 void GLWindow::advance()
