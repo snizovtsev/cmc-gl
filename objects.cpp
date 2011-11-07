@@ -88,6 +88,6 @@ void Clock::paint()
 
     setupMaterial(GL_FRONT_AND_BACK, BLACK_PLASTIC);
     arrows.paint();
-    arrows.paintShadow(QVector4D(0.0, 1.0, 0.0, -0.08));
+    arrows.paintShadow(QVector4D(0.0, -1.0, 0.0, 0.08));
 }
 

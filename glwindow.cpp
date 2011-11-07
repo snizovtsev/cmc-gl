@@ -61,12 +61,12 @@ void GLWindow::paintGL()
             0.0, 0.0, 0.0,  /* Center */
             0.0, 0.0, 1.0); /* Up */
 
-    placeLight(0, -8, 0);
-
     glRotatef(xRot, 1.0, 0.0, 0.0);
     glRotatef(yRot, 0.0, 1.0, 0.0);
     glRotatef(zRot, 0.0, 0.0, 1.0);
     glScalef(zoom, zoom, zoom);
+
+    placeLight(1, -2, 0);
 
     /* Anti-aliasing */
 /*    const int sample_count = 5;

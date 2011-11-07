@@ -10,7 +10,7 @@ QVector4D getLight(GLenum lightNo)
     glGetDoublev(GL_MODELVIEW_MATRIX, modelView.data());
     glGetLightfv(lightNo, GL_POSITION, lightPos);
 
-    return modelView * QVector4D(lightPos[0], lightPos[1], lightPos[2], lightPos[3]);
+    return modelView.inverted() * QVector4D(lightPos[0], lightPos[1], lightPos[2], lightPos[3]);
 }
 
 void Item::paintShadow(const QVector4D& plane)
@@ -43,14 +43,12 @@ void Item::paintShadow(const QVector4D& plane)
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glDisable(GL_LIGHTING);
 
-    glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, 0);
     glColor4f(0.0f, 0.0f, 0.0f, 0.5f);
 
     glPushMatrix();
     glMultMatrixd(&matrix[0][0]);
     paint();
     glPopMatrix();
-    glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, 1);
 
     glEnable(GL_LIGHTING);
     glDisable(GL_BLEND);
