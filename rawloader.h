@@ -9,7 +9,7 @@ class RawLoader : public Item
 {
 public:
     explicit RawLoader(const char* fileName);
-    void paint() const;
+    void paint();
 
     ~RawLoader();
 private:

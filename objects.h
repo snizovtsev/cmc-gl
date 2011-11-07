@@ -4,11 +4,19 @@
 #include "item.h"
 #include "rawloader.h"
 
+class Arrows: public RawLoader
+{
+public:
+    Arrows(): RawLoader("models/arrow.ply") { }
+    ~Arrows() { }
+    void paint();
+};
+
 class Clock : public Item
 {
 public:
     Clock();
-    void paint() const;
+    void paint();
     ~Clock();
 
 private:
@@ -16,7 +24,7 @@ private:
     RawLoader marks;
     RawLoader disk;
     RawLoader legs;
-    RawLoader arrow;
+    Arrows arrows;
 };
 
 #endif // CLOCK_H

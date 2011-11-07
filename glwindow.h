@@ -3,7 +3,7 @@
 
 #include <QtGui>
 #include <QGLWidget>
-#include "clock.h"
+#include "objects.h"
 
 class GLWindow : public QGLWidget
 {
@@ -35,6 +35,7 @@ private:
     Clock* clock;
 
     static void accumRotation(GLfloat &rot, GLfloat& vel);
+    static void placeLight(GLfloat x, GLfloat y, GLfloat z);
 };
 
 #endif // GLWINDOW_H

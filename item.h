@@ -4,11 +4,14 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <GL/glut.h>
+
 #include <cmath>
+#include <QVector4D>
 
 class Item {
 public:
-    virtual void paint() const = 0;
+    virtual void paint() = 0;
+    void paintShadow(const QVector4D& plane);
     virtual ~Item() { }
 };
 

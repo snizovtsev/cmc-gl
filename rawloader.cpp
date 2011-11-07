@@ -64,7 +64,7 @@ RawLoader::~RawLoader()
     delete geom;
 }
 
-void RawLoader::paint() const
+void RawLoader::paint()
 {
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_NORMAL_ARRAY);

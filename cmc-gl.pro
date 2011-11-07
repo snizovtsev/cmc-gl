@@ -7,12 +7,18 @@ LIBS = -lglut
 SOURCES += main.cpp \
     glwindow.cpp \
     rawloader.cpp \
-    clock.cpp \
-    materials.cpp
+    materials.cpp \
+    item.cpp \
+    objects.cpp
 
 HEADERS  += \
     glwindow.h \
     item.h \
-    clock.h \
     rawloader.h \
-    materials.h
+    materials.h \
+    objects.h
+
+
+
+
+

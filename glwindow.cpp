@@ -22,17 +22,30 @@ GLWindow::~GLWindow()
     delete clock;
 }
 
+void GLWindow::placeLight(GLfloat x, GLfloat y, GLfloat z)
+{
+    GLfloat lightpos[] = {x, y, z, 0.0};
+    glLightfv(GL_LIGHT0, GL_POSITION, lightpos);
+
+    glDisable(GL_LIGHTING);
+    glColor3f(1.0, 1.0, 0.0);
+    glTranslatef(x, y, z);
+    GLUquadric *quad = gluNewQuadric();
+    gluSphere(quad, 0.3, 100, 100);
+    glTranslatef(-x, -y, -z);
+    gluDeleteQuadric(quad);
+    glEnable(GL_LIGHTING);
+}
+
 void GLWindow::initializeGL()
 {
     glEnable(GL_LIGHTING);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_NORMALIZE);
 
-    // Setup light
+    // Turn on light
     glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, 1);
     glEnable(GL_LIGHT0);
-    //GLfloat lightpos[] = {10.0, 0.0, 0.0, 1.0};
-    //glLightfv(GL_LIGHT0, GL_POSITION, lightpos);
 
     clock = new Clock();
 }
@@ -40,15 +53,32 @@ void GLWindow::initializeGL()
 void GLWindow::paintGL()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
     glLoadIdentity();
+
     gluLookAt(
-            0.0, 0.0, 8.0,  /* Eye */
+            0.0, -8.0, 0.0,  /* Eye */
             0.0, 0.0, 0.0,  /* Center */
-            0.0, 1.0, 0.0); /* Up */
+            0.0, 0.0, 1.0); /* Up */
+
+    placeLight(0, -8, 0);
+
     glRotatef(xRot, 1.0, 0.0, 0.0);
     glRotatef(yRot, 0.0, 1.0, 0.0);
     glRotatef(zRot, 0.0, 0.0, 1.0);
     glScalef(zoom, zoom, zoom);
+
+    /* Anti-aliasing */
+/*    const int sample_count = 5;
+    clock->paint();
+    glAccum(GL_LOAD, 1.0f / sample_count);
+
+    for (int i = 1; i < sample_count; ++i) {
+        glTranslatef(0.001, 0.001, 0.001);
+        clock->paint();
+        glAccum(GL_ADD, 1.0f / sample_count);
+    }
+    glAccum(GL_RETURN, 1.0f);*/
 
     clock->paint();
 }
@@ -117,6 +147,6 @@ void GLWindow::mouseMoveEvent(QMouseEvent *event)
 
 void GLWindow::wheelEvent(QWheelEvent *event)
 {
-    zoom += event->delta() / 100.0;
+    zoom *= exp(event->delta() / 1000.0);
     updateGL();
 }
