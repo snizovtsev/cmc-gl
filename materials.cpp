@@ -33,5 +33,5 @@ void setupMaterial(GLenum face, enum Material material)
     glMaterialfv(face, GL_AMBIENT, entry);
     glMaterialfv(face, GL_DIFFUSE, entry + 4);
     glMaterialfv(face, GL_SPECULAR, entry + 4 + 3);
-    glMaterialf(face, GL_SHININESS,  entry[10]);
+    glMaterialf(face, GL_SHININESS,  entry[10] * 128.0);
 }
