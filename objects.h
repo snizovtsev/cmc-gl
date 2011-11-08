@@ -12,19 +12,53 @@ public:
     void paint();
 };
 
+class Body: public RawLoader
+{
+public:
+    Body(): RawLoader("models/body.ply") { }
+    ~Body() { }
+    void paint();
+};
+
+class Marks: public RawLoader
+{
+public:
+    Marks(): RawLoader("models/marks.ply") { }
+    ~Marks() { }
+    void paint();
+};
+
+class Legs: public RawLoader
+{
+public:
+    Legs(): RawLoader("models/legs.ply") { }
+    ~Legs() { }
+    void paint();
+};
+
+class Disk: public RawLoader
+{
+public:
+    Disk(): RawLoader("models/disk.ply") { }
+    ~Disk() { }
+    void paint();
+};
+
 class Clock : public Item
 {
 public:
-    Clock();
+    Clock() { }
+    ~Clock() { }
+
     void paint();
-    ~Clock();
+    void shadows();
 
 private:
-    RawLoader body;
-    RawLoader marks;
-    RawLoader disk;
-    RawLoader legs;
+    Body body;
+    Marks marks;
+    Legs legs;
     Arrows arrows;
+    Disk disk;
 };
 
 #endif // CLOCK_H

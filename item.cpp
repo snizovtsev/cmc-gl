@@ -41,6 +41,7 @@ void Item::paintShadow(const QVector4D& plane)
 
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    //glEnable(GL_POLYGON_OFFSET_FILL);
     glDisable(GL_LIGHTING);
 
     glColor4f(0.0f, 0.0f, 0.0f, 0.5f);
@@ -51,5 +52,25 @@ void Item::paintShadow(const QVector4D& plane)
     glPopMatrix();
 
     glEnable(GL_LIGHTING);
+    //glDisable(GL_POLYGON_OFFSET_FILL);
     glDisable(GL_BLEND);
+}
+
+void Item::beginStencil()
+{
+    glEnable(GL_STENCIL_TEST);
+    glClear(GL_STENCIL_BUFFER_BIT);
+
+    glStencilOp(GL_REPLACE, GL_REPLACE, GL_REPLACE);
+    glStencilFunc(GL_ALWAYS, 1, 0xffffffff);
+
+    paint();
+
+    glStencilFunc(GL_EQUAL, 1, 0xffffffff);
+    glStencilOp(GL_KEEP, GL_KEEP, GL_ZERO);
+}
+
+void Item::endStencil()
+{
+    glDisable(GL_STENCIL_TEST);
 }

@@ -10,9 +10,18 @@
 
 class Item {
 public:
-    virtual void paint() = 0;
-    void paintShadow(const QVector4D& plane);
+    Item() { }
     virtual ~Item() { }
+
+    virtual void paint() = 0;
+    virtual void shadows() { }
+
+    void paintShadow(const QVector4D& plane);
+    void beginStencil();
+    void endStencil();
+
+protected:
+    bool with_shadows;
 };
 
 #endif // ITEM_H

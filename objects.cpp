@@ -2,21 +2,10 @@
 #include "materials.h"
 #include <QTime>
 
-Clock::Clock()
-    : body("models/body.ply"),
-      marks("models/marks.ply"),
-      disk("models/disk.ply"),
-      legs("models/legs.ply")
-{
-}
-
-Clock::~Clock()
-{
-
-}
-
 void Arrows::paint()
 {
+    setupMaterial(GL_FRONT_AND_BACK, BLACK_PLASTIC);
+
     QTime time = QTime::currentTime();
     glPushMatrix();
         glRotatef(90.0, 1.0, 0.0, 0.0);
@@ -51,43 +40,70 @@ void Arrows::paint()
     gluDeleteQuadric(stick);
 }
 
-void Clock::paint()
+void Body::paint()
 {
-    //GLdouble plane[4] = {0.0, 1.0, 0.0, -0.08};
-    //glEnable(GL_CLIP_PLANE0);
-    //glClipPlane(GL_CLIP_PLANE0, plane);
-
     setupMaterial(GL_FRONT_AND_BACK, GREEN_PLASTIC);
     glPushMatrix();
+//        glTranslatef(0, 2, 0);
         glScalef(0.10, 0.10, 0.10);
-        body.paint();
+        RawLoader::paint();
     glPopMatrix();
+}
 
-    setupMaterial(GL_FRONT_AND_BACK, TURQUOISE);
-    glPushMatrix();
-        glScalef(0.10, 0.10, 0.10);
-        disk.paint();
-    glPopMatrix();
-
-    //glDisable(GL_CLIP_PLANE0);
-
-    setupMaterial(GL_FRONT_AND_BACK, SILVER);
-    glPushMatrix();
-        glTranslatef(-0.767, 0.5, 1.276);
-        glScalef(0.10, 0.10, 0.10);
-        legs.paint();
-    glPopMatrix();
-
+void Marks::paint()
+{
     setupMaterial(GL_FRONT, COPPER);
     setupMaterial(GL_BACK, BRONZE);
     glPushMatrix();
         glTranslatef(0.0f, 0.07f, 0.0f);
         glRotatef(90.0, 1.0, 0.0, 0.0);
-        marks.paint();
+        RawLoader::paint();
     glPopMatrix();
+}
 
-    setupMaterial(GL_FRONT_AND_BACK, BLACK_PLASTIC);
+void Legs::paint()
+{
+    setupMaterial(GL_FRONT_AND_BACK, SILVER);
+    glPushMatrix();
+        glTranslatef(-0.767, 0.5, 1.276);
+        glScalef(0.10, 0.10, 0.10);
+        RawLoader::paint();
+    glPopMatrix();
+}
+
+void Disk::paint()
+{
+    setupMaterial(GL_FRONT_AND_BACK, TURQUOISE);
+    glPushMatrix();
+        glScalef(0.10, 0.10, 0.10);
+        RawLoader::paint();
+    glPopMatrix();
+}
+
+void Clock::paint()
+{
+    body.paint();
+    legs.paint();
     arrows.paint();
+    marks.paint();
+    disk.paint();
+}
+
+void Clock::shadows()
+{
+    disk.beginStencil();
     arrows.paintShadow(QVector4D(0.0, -1.0, 0.0, 0.08));
+    marks.paintShadow(QVector4D(0.0, -1.0, 0.0, 0.08));
+    disk.endStencil();
+
+    marks.beginStencil();
+    arrows.paintShadow(QVector4D(0.0, -1.0, 0.0, 0.06));
+    marks.endStencil();
+
+    //glEnable(GL_CLIP_PLANE0);
+    //GLdouble diskPlane[] = {0.0, -1.0, 0.0, 0.08};
+    //glClipPlane(GL_CLIP_PLANE0, diskPlane);
+    //body.paintShadow(QVector4D(0.0, -1.0, 0.0, 0.08));
+    //glDisable(GL_CLIP_PLANE0);
 }
 

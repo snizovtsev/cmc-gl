@@ -81,6 +81,7 @@ void GLWindow::paintGL()
     glAccum(GL_RETURN, 1.0f);*/
 
     clock->paint();
+    clock->shadows();
 }
 
 void GLWindow::accumRotation(GLfloat &rot, GLfloat& vel)
