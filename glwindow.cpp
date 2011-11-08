@@ -122,13 +122,13 @@ void GLWindow::mouseMoveEvent(QMouseEvent *event)
     /* Set rotation velocity */
     if (event->buttons() & Qt::LeftButton) {
         xVel = dy;
-        yVel = dx;
-        zVel = 0.0;
+        yVel = 0.0;
+        zVel = dx;
         updateGL();
     } else if (event->buttons() & Qt::RightButton) {
         xVel = dy;
-        yVel = 0.0;
-        zVel = dx;
+        yVel = dx;
+        zVel = 0.0;
         updateGL();
     }
 
