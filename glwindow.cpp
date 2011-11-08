@@ -46,6 +46,9 @@ void GLWindow::initializeGL()
     glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, 1);
     glEnable(GL_LIGHT0);
 
+    // Load textures
+    qDebug() << "Texture ID: " << bindTexture(QPixmap("models/tex.jpg"));
+
     scene = new Scene();
 }
 

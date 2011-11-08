@@ -44,7 +44,6 @@ void Body::paint()
 {
     setupMaterial(GL_FRONT_AND_BACK, GREEN_PLASTIC);
     glPushMatrix();
-//        glTranslatef(0, 2, 0);
         glScalef(0.10, 0.10, 0.10);
         RawLoader::paint();
     glPopMatrix();
@@ -103,12 +102,16 @@ void Clock::shadows()
 
 void Table::paint()
 {
-    setupMaterial(GL_FRONT_AND_BACK, BRONZE);
+    glEnable(GL_TEXTURE_2D);
+    setupMaterial(GL_FRONT_AND_BACK, GOLD);
+    glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 
     glPushMatrix();
     glTranslatef(0, 0, -8.85);
     RawLoader::paint();
     glPopMatrix();
+
+    glDisable(GL_TEXTURE_2D);
 }
 
 void Scene::paint()
