@@ -2,7 +2,6 @@ QT       += core gui opengl
 
 TARGET = cmc-gl
 TEMPLATE = app
-LIBS = -lglut
 
 SOURCES += main.cpp \
     glwindow.cpp \

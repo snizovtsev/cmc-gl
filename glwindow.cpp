@@ -1,9 +1,5 @@
 #include "glwindow.h"
 
-#include <GL/glut.h>
-#include <algorithm>
-using namespace std;
-
 GLWindow::GLWindow(QWidget *parent) :
     QGLWidget(parent),
     xRot(0.0), yRot(0.0), zRot(0.0),
@@ -43,7 +39,6 @@ void GLWindow::initializeGL()
     glEnable(GL_NORMALIZE);
 
     // Turn on light
-    glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, 1);
     glEnable(GL_LIGHT0);
 
     // Load textures
@@ -79,7 +74,7 @@ void GLWindow::accumRotation(GLfloat &rot, GLfloat& vel)
     float sign = copysignf(1.0, vel);
 
     rot += vel;
-    vel = copysignf(max(fabsf(vel) - 0.5f, 0.0f), sign);
+    vel = copysignf(qMax(fabsf(vel) - 0.5f, 0.0f), sign);
 }
 
 void GLWindow::advance()

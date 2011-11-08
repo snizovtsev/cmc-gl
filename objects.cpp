@@ -51,6 +51,7 @@ void Body::paint()
 
 void Marks::paint()
 {
+    glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, 1);
     setupMaterial(GL_FRONT, COPPER);
     setupMaterial(GL_BACK, BRONZE);
     glPushMatrix();
@@ -58,16 +59,19 @@ void Marks::paint()
         glRotatef(90.0, 1.0, 0.0, 0.0);
         RawLoader::paint();
     glPopMatrix();
+    glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, 1);
 }
 
 void Legs::paint()
 {
+    glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, 1);
     setupMaterial(GL_FRONT_AND_BACK, SILVER);
     glPushMatrix();
         glTranslatef(-0.767, 0.5, 1.276);
         glScalef(0.10, 0.10, 0.10);
         RawLoader::paint();
     glPopMatrix();
+    glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, 0);
 }
 
 void Disk::paint()
