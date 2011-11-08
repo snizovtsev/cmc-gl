@@ -65,6 +65,14 @@ void GLWindow::paintGL()
 
     placeLight(1, -5, 3);
 
+    glEnable(GL_STENCIL_TEST);
+    glClear(GL_STENCIL_BITS);
+    glClearStencil(0);
+    glStencilFunc(GL_EQUAL, 0, 0xffffffff);
+    glStencilOp(GL_KEEP, GL_KEEP, GL_INCR);
+    scene->paintShadow(QVector4D(0, 0, 1.0, 8.85));
+    glDisable(GL_STENCIL_TEST);
+
     scene->paint();
     scene->shadows();
 }
