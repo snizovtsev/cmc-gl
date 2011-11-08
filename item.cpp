@@ -64,7 +64,9 @@ void Item::beginStencil()
     glStencilOp(GL_REPLACE, GL_REPLACE, GL_REPLACE);
     glStencilFunc(GL_ALWAYS, 1, 0xffffffff);
 
+    glDisable(GL_LIGHTING);
     paint();
+    glEnable(GL_LIGHTING);
 
     glStencilFunc(GL_EQUAL, 1, 0xffffffff);
     glStencilOp(GL_KEEP, GL_KEEP, GL_ZERO);

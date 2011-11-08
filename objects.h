@@ -61,4 +61,26 @@ private:
     Disk disk;
 };
 
+class Table: public RawLoader
+{
+public:
+    Table(): RawLoader("models/table.ply") { }
+    ~Table() { }
+    void paint();
+};
+
+class Scene: Item
+{
+public:
+    Scene() { }
+    ~Scene() { }
+
+    void paint();
+    void shadows();
+
+private:
+    Clock clock;
+    Table table;
+};
+
 #endif // CLOCK_H

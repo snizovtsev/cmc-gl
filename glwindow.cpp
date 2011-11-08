@@ -13,13 +13,11 @@ GLWindow::GLWindow(QWidget *parent) :
     QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(advance()));
     timer->start(50);
-
-    clock = 0;
 }
 
 GLWindow::~GLWindow()
 {
-    delete clock;
+    delete scene;
 }
 
 void GLWindow::placeLight(GLfloat x, GLfloat y, GLfloat z)
@@ -39,6 +37,7 @@ void GLWindow::placeLight(GLfloat x, GLfloat y, GLfloat z)
 
 void GLWindow::initializeGL()
 {
+    glClearColor(.5f, .5f, .5f, 0.3f);
     glEnable(GL_LIGHTING);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_NORMALIZE);
@@ -47,7 +46,7 @@ void GLWindow::initializeGL()
     glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, 1);
     glEnable(GL_LIGHT0);
 
-    clock = new Clock();
+    scene = new Scene();
 }
 
 void GLWindow::paintGL()
@@ -66,22 +65,10 @@ void GLWindow::paintGL()
     glRotatef(zRot, 0.0, 0.0, 1.0);
     glScalef(zoom, zoom, zoom);
 
-    placeLight(1, -2, 0);
+    placeLight(1, -5, 3);
 
-    /* Anti-aliasing */
-/*    const int sample_count = 5;
-    clock->paint();
-    glAccum(GL_LOAD, 1.0f / sample_count);
-
-    for (int i = 1; i < sample_count; ++i) {
-        glTranslatef(0.001, 0.001, 0.001);
-        clock->paint();
-        glAccum(GL_ADD, 1.0f / sample_count);
-    }
-    glAccum(GL_RETURN, 1.0f);*/
-
-    clock->paint();
-    clock->shadows();
+    scene->paint();
+    scene->shadows();
 }
 
 void GLWindow::accumRotation(GLfloat &rot, GLfloat& vel)

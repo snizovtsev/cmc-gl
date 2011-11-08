@@ -99,11 +99,29 @@ void Clock::shadows()
     marks.beginStencil();
     arrows.paintShadow(QVector4D(0.0, -1.0, 0.0, 0.06));
     marks.endStencil();
-
-    //glEnable(GL_CLIP_PLANE0);
-    //GLdouble diskPlane[] = {0.0, -1.0, 0.0, 0.08};
-    //glClipPlane(GL_CLIP_PLANE0, diskPlane);
-    //body.paintShadow(QVector4D(0.0, -1.0, 0.0, 0.08));
-    //glDisable(GL_CLIP_PLANE0);
 }
 
+void Table::paint()
+{
+    setupMaterial(GL_FRONT_AND_BACK, BRONZE);
+
+    glPushMatrix();
+    glTranslatef(0, 0, -8.85);
+    RawLoader::paint();
+    glPopMatrix();
+}
+
+void Scene::paint()
+{
+    table.paint();
+    clock.paint();
+}
+
+void Scene::shadows()
+{
+    table.shadows();
+    clock.shadows();
+    table.beginStencil();
+    clock.paintShadow(QVector4D(0, 0, 1.0, 1.35));
+    table.endStencil();
+}

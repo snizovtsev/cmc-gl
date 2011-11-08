@@ -32,7 +32,7 @@ private:
     QPoint lastPos;
     QTime  lastTime;
 
-    Clock* clock;
+    Scene* scene;
 
     static void accumRotation(GLfloat &rot, GLfloat& vel);
     static void placeLight(GLfloat x, GLfloat y, GLfloat z);
