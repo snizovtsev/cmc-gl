@@ -69,7 +69,7 @@ public:
     void paint();
 };
 
-class Scene: Item
+class Scene: public Item
 {
 public:
     Scene() { }
