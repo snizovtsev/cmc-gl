@@ -1,4 +1,5 @@
 #include "materials.h"
+#include "pluginimpl.h"
 
 const GLfloat material_table[24][11] = {
     {0.0215,    0.1745,    0.0215,    .1,  0.07568,   0.61424,     0.07568,     0.633,       0.727811,    0.633,       0.6},
@@ -27,7 +28,7 @@ const GLfloat material_table[24][11] = {
     {0.05,      0.05,      0.0,       .1,  0.5,       0.5,         0.4,         0.7,         0.7,         0.04,        .078125}
 };
 
-void setupMaterial(GLenum face, enum Material material)
+void PluginImpl::setupMaterial(GLenum face, enum Material material) const
 {
     const GLfloat* entry = material_table[material];
     glMaterialfv(face, GL_AMBIENT, entry);

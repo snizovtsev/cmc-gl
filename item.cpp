@@ -1,6 +1,6 @@
-#include "item.h"
-
 #include <QMatrix4x4>
+
+#include "pluginimpl.h"
 
 QVector4D getLight(GLenum lightNo)
 {
@@ -13,7 +13,7 @@ QVector4D getLight(GLenum lightNo)
     return modelView.inverted() * QVector4D(lightPos[0], lightPos[1], lightPos[2], lightPos[3]);
 }
 
-void Item::paintShadow(const QVector4D& plane)
+void PluginImpl::paintShadow(Item* item, const QVector4D &plane) const
 {
     QVector4D light = getLight(GL_LIGHT0);
     qreal dot = QVector4D::dotProduct(light, plane);
@@ -48,7 +48,7 @@ void Item::paintShadow(const QVector4D& plane)
 
     glPushMatrix();
     glMultMatrixd(&matrix[0][0]);
-    paint();
+    item->paint();
     glPopMatrix();
 
     glEnable(GL_LIGHTING);
@@ -56,7 +56,12 @@ void Item::paintShadow(const QVector4D& plane)
     glDisable(GL_BLEND);
 }
 
-void Item::beginStencil()
+void PluginImpl::paintShadow(const char *itemID, const QVector4D &plane)
+{
+    paintShadow(getItem(itemID), plane);
+}
+
+void PluginImpl::beginStencil(Item *item) const
 {
     glEnable(GL_STENCIL_TEST);
     glClear(GL_STENCIL_BUFFER_BIT);
@@ -66,14 +71,19 @@ void Item::beginStencil()
     glStencilFunc(GL_ALWAYS, 1, 0xffffffff);
 
     glDisable(GL_LIGHTING);
-    paint();
+    item->paint();
     glEnable(GL_LIGHTING);
 
     glStencilFunc(GL_EQUAL, 1, 0xffffffff);
     glStencilOp(GL_KEEP, GL_KEEP, GL_ZERO);
 }
 
-void Item::endStencil()
+void PluginImpl::beginStencil(const char *itemID)
+{
+    beginStencil(getItem(itemID));
+}
+
+void PluginImpl::endStencil() const
 {
     glDisable(GL_STENCIL_TEST);
 }

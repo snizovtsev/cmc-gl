@@ -1,8 +1,8 @@
-#include "rawloader.h"
-
 #include <QtCore>
 #include <QVector2D>
 #include <QVector3D>
+
+#include "rawloader.h"
 
 struct Geometry {
     QVector<GLushort> faces;
@@ -22,14 +22,16 @@ void Geometry::loadArrays() const
         glTexCoordPointer(2, GL_FLOAT, 0, texCoords.constData());
 }
 
-RawLoader::RawLoader(const char* fileName)
+GeometryItem* RawLoader::load(const char *fileName)
 {
-    geom = new Geometry();
-
     QFile data(fileName);
-    if (!data.open(QFile::ReadOnly | QFile::Text))
+    if (!data.open(QFile::ReadOnly | QFile::Text)) {
         qDebug() << "Can't open " << fileName;
+        return 0;
+    }
+
     QTextStream stream(&data);
+    Geometry *geom = new Geometry();
 
     int nvert, nface;
     stream >> nvert >> nface;
@@ -68,14 +70,11 @@ RawLoader::RawLoader(const char* fileName)
             geom->faces.append(index);
         }
     }
+
+    return new GeometryItem(geom);
 }
 
-RawLoader::~RawLoader()
-{
-    delete geom;
-}
-
-void RawLoader::paint()
+void GeometryItem::paint()
 {
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_NORMAL_ARRAY);
@@ -90,4 +89,14 @@ void RawLoader::paint()
         glDisableClientState(GL_TEXTURE_COORD_ARRAY);
     glDisableClientState(GL_NORMAL_ARRAY);
     glDisableClientState(GL_VERTEX_ARRAY);
+}
+
+GeometryItem::~GeometryItem()
+{
+    delete geom;
+}
+
+extern "C" Q_DECL_EXPORT void registerPlugin(Plugin* plugin)
+{
+    plugin->registerLoader(RawLoaderFactory());
 }

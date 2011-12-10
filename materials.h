@@ -34,6 +34,4 @@ enum Material {
     YELLOW_RUBBER
 };
 
-void setupMaterial(GLenum face, enum Material material);
-
 #endif // MATERIALS_H

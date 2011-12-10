@@ -1,10 +1,10 @@
 #include "glwindow.h"
 
-GLWindow::GLWindow(QWidget *parent) :
+GLWindow::GLWindow(Plugin *_plugin, QWidget *parent) :
     QGLWidget(parent),
     xRot(0.0), yRot(0.0), zRot(0.0),
     xVel(0.0), yVel(0.0), zVel(0.0),
-    zoom(1.0)
+    zoom(1.0), plugin(_plugin)
 {
     QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(advance()));
@@ -44,7 +44,7 @@ void GLWindow::initializeGL()
     // Load textures
     qDebug() << "Texture ID: " << bindTexture(QPixmap("models/tex.jpg"));
 
-    scene = new Scene();
+    scene = plugin->getItem("item:scene");
 }
 
 void GLWindow::paintGL()
@@ -70,7 +70,7 @@ void GLWindow::paintGL()
     glClearStencil(0);
     glStencilFunc(GL_EQUAL, 0, 0xffffffff);
     glStencilOp(GL_KEEP, GL_KEEP, GL_INCR);
-    scene->paintShadow(QVector4D(0, 0, 1.0, 8.85));
+    plugin->paintShadow(scene, QVector4D(0, 0, 1.0, 8.85));
     glDisable(GL_STENCIL_TEST);
 
     scene->paint();

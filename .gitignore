@@ -5,3 +5,4 @@ Makefile
 cmc-gl
 *.blend
 *.swp
+plugins/lib*.so*
