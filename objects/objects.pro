@@ -1,5 +1,4 @@
-TEMPLATE = lib
+include(../plugin.pri)
+
 SOURCES += objects.cpp
 HEADERS += objects.h
-INCLUDEPATH += ..
-TARGET = ../plugins/objects

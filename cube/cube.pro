@@ -1,5 +1,4 @@
-TEMPLATE = lib
+include(../plugin.pri)
+
 SOURCES += cube.cpp
 HEADERS += cube.h
-INCLUDEPATH += ..
-TARGET = ../plugins/cube
