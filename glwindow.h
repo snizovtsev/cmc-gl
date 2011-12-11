@@ -4,14 +4,14 @@
 #include <QtGui>
 #include <QGLWidget>
 
-#include "plugin.h"
+#include "pluginimpl.h"
 
 class GLWindow : public QGLWidget
 {
     Q_OBJECT
 
 public:
-    explicit GLWindow(Plugin* _plugin, QWidget *parent = 0);
+    explicit GLWindow(PluginImpl* _plugin, QWidget *parent = 0);
     ~GLWindow();
 
 protected:
@@ -33,8 +33,8 @@ private:
     QPoint lastPos;
     QTime  lastTime;
 
-    Item* scene;
-    Plugin* plugin;
+    QList<Item*> rootItems;
+    PluginImpl* plugin;
 
     static void accumRotation(GLfloat &rot, GLfloat& vel);
     static void placeLight(GLfloat x, GLfloat y, GLfloat z);

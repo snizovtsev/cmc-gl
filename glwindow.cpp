@@ -1,6 +1,6 @@
 #include "glwindow.h"
 
-GLWindow::GLWindow(Plugin *_plugin, QWidget *parent) :
+GLWindow::GLWindow(PluginImpl *_plugin, QWidget *parent) :
     QGLWidget(parent),
     xRot(0.0), yRot(0.0), zRot(0.0),
     xVel(0.0), yVel(0.0), zVel(0.0),
@@ -13,7 +13,6 @@ GLWindow::GLWindow(Plugin *_plugin, QWidget *parent) :
 
 GLWindow::~GLWindow()
 {
-    delete scene;
 }
 
 void GLWindow::placeLight(GLfloat x, GLfloat y, GLfloat z)
@@ -44,7 +43,7 @@ void GLWindow::initializeGL()
     // Load textures
     qDebug() << "Texture ID: " << bindTexture(QPixmap("models/tex.jpg"));
 
-    scene = plugin->getItem("item:scene");
+    rootItems = plugin->getRootItems();
 }
 
 void GLWindow::paintGL()
@@ -70,11 +69,15 @@ void GLWindow::paintGL()
     glClearStencil(0);
     glStencilFunc(GL_EQUAL, 0, 0xffffffff);
     glStencilOp(GL_KEEP, GL_KEEP, GL_INCR);
-    plugin->paintShadow(scene, QVector4D(0, 0, 1.0, 8.85));
+
+    foreach (Item* scene, rootItems)
+        plugin->paintShadow(scene, QVector4D(0, 0, 1.0, 8.85));
     glDisable(GL_STENCIL_TEST);
 
-    scene->paint();
-    scene->shadows();
+    foreach (Item* scene, rootItems) {
+        scene->paint();
+        scene->shadows();
+    }
 }
 
 void GLWindow::accumRotation(GLfloat &rot, GLfloat& vel)

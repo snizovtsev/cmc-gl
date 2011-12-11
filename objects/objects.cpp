@@ -6,7 +6,7 @@
 
 Plugin* plugin;
 
-void Arrows::paint()
+void Cube::paint()
 {
     plugin->setupMaterial(GL_FRONT_AND_BACK, BLACK_PLASTIC);
 
@@ -149,4 +149,6 @@ extern "C" Q_DECL_EXPORT void registerPlugin(Plugin* _plugin)
     plugin->registerItem(ClockFactory());
     plugin->registerItem(TableFactory());
     plugin->registerItem(SceneFactory());
+
+    plugin->registerRootItem("item:scene");
 }

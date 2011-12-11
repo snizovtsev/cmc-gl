@@ -69,3 +69,16 @@ Item* PluginImpl::getItem(const char *id)
 
     return items[id] = item;
 }
+
+QList<Item*> PluginImpl::getRootItems()
+{
+    QList<Item*> result;
+    foreach (QString sceneID, rootItems)
+        result += getItem(qPrintable(sceneID));
+    return result;
+}
+
+void PluginImpl::registerRootItem(const char *itemID)
+{
+    rootItems += itemID;
+}

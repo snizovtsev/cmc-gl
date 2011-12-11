@@ -22,6 +22,13 @@ public:
     virtual Q_DECL_EXPORT const char* id() const = 0;
 };
 
+#define FACTORY(klass) \
+    class klass ## Factory: public Factory<Item> { \
+    public: \
+        klass * create() const { return new klass (); } \
+        ~klass ## Factory () { } \
+    }
+
 class Loader: public Interface {
 public:
     virtual Q_DECL_EXPORT Item* load(const char* fileName) = 0;
@@ -32,6 +39,7 @@ class Plugin: public Interface {
 public:
     virtual Q_DECL_IMPORT void  registerLoader(const Factory<Loader> &loaderFactory) = 0;
     virtual Q_DECL_IMPORT void  registerItem(const Factory<Item> &itemFactory) = 0;
+    virtual Q_DECL_IMPORT void  registerRootItem(const char* itemID) = 0;
     virtual Q_DECL_IMPORT Item* getItem(const char* id)  = 0;
 
     virtual Q_DECL_IMPORT void  paintShadow(Item* item, const QVector4D& plane) const = 0;

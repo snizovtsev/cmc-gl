@@ -8,12 +8,16 @@ class PluginImpl : public Plugin
 {
     QMap <QString, Loader*> loaders;
     QMap <QString, Item*>   items;
+    QList<QString>          rootItems;
 public:
     PluginImpl();
 
     void registerLoader(const Factory<Loader> &loaderFactory);
     void registerItem(const Factory<Item> &itemFactory);
+    void registerRootItem(const char *itemID);
     Item* getItem(const char *id);
+
+    QList<Item*> getRootItems();
 
     void paintShadow(Item* item, const QVector4D& plane) const;
     void paintShadow(const char* itemID, const QVector4D& plane);

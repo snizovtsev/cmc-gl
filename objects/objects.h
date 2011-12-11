@@ -3,13 +3,6 @@
 
 #include "plugin.h"
 
-#define FACTORY(klass) \
-    class klass ## Factory: public Factory<Item> { \
-    public: \
-        klass * create() const { return new klass (); } \
-        ~klass ## Factory () { } \
-    }
-
 class ModelItem: public Item
 {
 protected:
@@ -17,16 +10,16 @@ protected:
     explicit ModelItem(const char* const file): modelFile(file) { }
 };
 
-class Arrows: public ModelItem
+class Cube: public ModelItem
 {
 public:
-    Arrows(): ModelItem("raw:models/arrow.ply") { }
-    ~Arrows() { }
+    Cube(): ModelItem("raw:models/arrow.ply") { }
+    ~Cube() { }
     void paint();
     void shadows() { }
     const char* id() const { return "arrows"; }
 };
-FACTORY(Arrows);
+FACTORY(Cube);
 
 class Body: public ModelItem
 {
