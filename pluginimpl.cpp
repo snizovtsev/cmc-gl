@@ -6,24 +6,30 @@ PluginImpl::PluginImpl()
 
 PluginImpl::~PluginImpl()
 {
+    foreach (Item *item, items)
+        delete item;
+    foreach (Loader *loader, loaders)
+        delete loader;
 }
 
-void PluginImpl::registerItem(const Factory<Item> &item)
+void PluginImpl::registerItem(const Factory<Item> &itemFactory)
 {
-    Item* instance = item.create();
+    Item* instance = itemFactory.create();
     if (items.contains(instance->id())) {
         qDebug() << instance->id() << "is already registered, ignoring...";
+        delete instance;
         return;
     }
 
     items[instance->id()] = instance;
 }
 
-void PluginImpl::registerLoader(const Factory<Loader> &loader)
+void PluginImpl::registerLoader(const Factory<Loader> &loaderFactory)
 {
-    Loader* instance = loader.create();
+    Loader* instance = loaderFactory.create();
     if (loaders.contains(instance->accept()) || strcmp(instance->accept(), "item") == 0) {
         qDebug() << instance->accept() << "is already supported, ignoring...";
+        delete instance;
         return;
     }
 
@@ -51,7 +57,7 @@ Item* PluginImpl::getItem(const char *id)
     }
 
     if (!loaders.contains(path[0])) {
-        qDebug() << path[0] << "is not supported";
+        qDebug() << path[0] << "protocol is not supported";
         return 0;
     }
 

@@ -11,8 +11,8 @@ class PluginImpl : public Plugin
 public:
     PluginImpl();
 
-    void registerLoader(const Factory<Loader> &loader);
-    void registerItem(const Factory<Item> &item);
+    void registerLoader(const Factory<Loader> &loaderFactory);
+    void registerItem(const Factory<Item> &itemFactory);
     Item* getItem(const char *id);
 
     void paintShadow(Item* item, const QVector4D& plane) const;

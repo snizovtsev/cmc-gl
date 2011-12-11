@@ -30,8 +30,8 @@ public:
 
 class Plugin: public Interface {
 public:
-    virtual Q_DECL_IMPORT void  registerLoader(const Factory<Loader> &loader) = 0;
-    virtual Q_DECL_IMPORT void  registerItem(const Factory<Item> &item) = 0;
+    virtual Q_DECL_IMPORT void  registerLoader(const Factory<Loader> &loaderFactory) = 0;
+    virtual Q_DECL_IMPORT void  registerItem(const Factory<Item> &itemFactory) = 0;
     virtual Q_DECL_IMPORT Item* getItem(const char* id)  = 0;
 
     virtual Q_DECL_IMPORT void  paintShadow(Item* item, const QVector4D& plane) const = 0;
