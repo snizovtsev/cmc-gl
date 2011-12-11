@@ -49,7 +49,6 @@ Item* PluginImpl::getItem(const char *id)
 
     if (path[0] == "item") {
         if (!items.contains(path[1])) {
-            qDebug() << "paintItem: No such item:" << path[1];
             return 0;
         }
 

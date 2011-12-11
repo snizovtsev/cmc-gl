@@ -65,7 +65,6 @@ void PluginImpl::beginStencil(Item *item) const
 {
     glEnable(GL_STENCIL_TEST);
     glClear(GL_STENCIL_BUFFER_BIT);
-    glClearStencil(0);
 
     glStencilOp(GL_REPLACE, GL_REPLACE, GL_REPLACE);
     glStencilFunc(GL_ALWAYS, 1, 0xffffffff);

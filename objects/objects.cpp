@@ -141,7 +141,9 @@ void Scene::shadows()
     plugin->getItem("item:table")->shadows();
     plugin->getItem("item:clock")->shadows();
     plugin->beginStencil("item:table");
-    plugin->paintShadow("item:clock", QVector4D(0, 0, 1.0, 1.35));
+    plugin->paintShadow("item:clock", QVector4D(0, 0, 1.0, 1.4));
+    if (plugin->getItem("item:cube") != 0) // WORKAROUND
+        plugin->paintShadow("item:cube", QVector4D(0, 0, 1.0, 1.4));
     plugin->endStencil();
 }
 
