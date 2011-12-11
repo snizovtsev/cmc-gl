@@ -1,6 +1,8 @@
 #ifndef CLOCK_H
 #define CLOCK_H
 
+#include <GL/glu.h>
+
 #include "plugin.h"
 
 class ModelItem: public Item
@@ -10,16 +12,17 @@ protected:
     explicit ModelItem(const char* const file): modelFile(file) { }
 };
 
-class Cube: public ModelItem
+class Arrows: public ModelItem
 {
+    GLUquadric* stick;
 public:
-    Cube(): ModelItem("raw:models/arrow.ply") { }
-    ~Cube() { }
+    Arrows();
+    ~Arrows();
     void paint();
     void shadows() { }
     const char* id() const { return "arrows"; }
 };
-FACTORY(Cube);
+FACTORY(Arrows);
 
 class Body: public ModelItem
 {

@@ -1,12 +1,22 @@
 #include <QTime>
 #include <QVector4D>
-#include <GL/glu.h>
 
 #include "objects.h"
 
 Plugin* plugin;
 
-void Cube::paint()
+Arrows::Arrows()
+    : ModelItem("raw:models/arrow.ply")
+{
+    stick = gluNewQuadric();
+}
+
+Arrows::~Arrows()
+{
+    gluDeleteQuadric(stick);
+}
+
+void Arrows::paint()
 {
     plugin->setupMaterial(GL_FRONT_AND_BACK, BLACK_PLASTIC);
 
@@ -33,7 +43,6 @@ void Cube::paint()
     glPopMatrix();
 
     plugin->setupMaterial(GL_FRONT, SILVER);
-    GLUquadric* stick = gluNewQuadric();
     glPushMatrix();
         glTranslatef(0.0, 0.12, 0.0);
         glRotatef(90.0, 1.0, 0.0, 0.0);
@@ -41,7 +50,6 @@ void Cube::paint()
         glTranslatef(0.0, 0.0, 0.15);
         gluDisk(stick, 0.00, 0.02, 30, 30);
     glPopMatrix();
-    gluDeleteQuadric(stick);
 }
 
 void Body::paint()
