@@ -1,5 +1,5 @@
-#ifndef CLOCK_H
-#define CLOCK_H
+#ifndef OBJECTS_H
+#define OBJECTS_H
 
 #include <GL/glu.h>
 
@@ -104,4 +104,4 @@ public:
 };
 FACTORY(Scene);
 
-#endif // CLOCK_H
+#endif // OBJECTS_H
